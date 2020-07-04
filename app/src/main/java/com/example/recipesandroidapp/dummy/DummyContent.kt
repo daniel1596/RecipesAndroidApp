@@ -1,7 +1,15 @@
 package com.example.recipesandroidapp.dummy
 
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
+
+/*
+*         val db = Room.databaseBuilder(
+                rootView.context.applicationContext,
+                RecipeDatabase::class.java,
+                "recipes")
+            .createFromAsset("db/recipes.db")
+            .build()
+* */
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -21,7 +29,7 @@ object DummyContent {
      */
     val ITEM_MAP: MutableMap<String, DummyItem> = HashMap()
 
-    private val COUNT = 25
+    private val COUNT = 4
 
     init {
         // Add some sample items.

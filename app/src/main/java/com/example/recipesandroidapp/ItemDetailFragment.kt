@@ -1,5 +1,6 @@
 package com.example.recipesandroidapp
 
+import android.os.AsyncTask
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -7,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.room.Room
 import com.example.recipesandroidapp.dummy.DummyContent
+import com.example.recipesandroidapp.room.Recipe
+import com.example.recipesandroidapp.room.RecipeDatabase
 
 /**
  * A fragment representing a single Item detail screen.
@@ -35,6 +39,10 @@ class ItemDetailFragment : Fragment() {
             }
         }
     }
+
+//    suspend fun getRecipe(db: RecipeDatabase): Recipe {
+//        return db.recipeDao().getRecipeByName("Bean burgers")
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
