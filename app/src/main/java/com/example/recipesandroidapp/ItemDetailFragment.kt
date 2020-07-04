@@ -12,6 +12,9 @@ import androidx.room.Room
 import com.example.recipesandroidapp.dummy.DummyContent
 import com.example.recipesandroidapp.room.Recipe
 import com.example.recipesandroidapp.room.RecipeDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * A fragment representing a single Item detail screen.
@@ -25,9 +28,15 @@ class ItemDetailFragment : Fragment() {
      * The dummy content this fragment is presenting.
      */
     private var item: DummyContent.DummyItem? = null
+    public var recipe: Recipe? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // This didn't work but I'm trying to figure out when and how to call this loadDb() method
+        GlobalScope.launch(Dispatchers.Main) {
+            loadDb()
+        }
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
@@ -40,9 +49,21 @@ class ItemDetailFragment : Fragment() {
         }
     }
 
-//    suspend fun getRecipe(db: RecipeDatabase): Recipe {
-//        return db.recipeDao().getRecipeByName("Bean burgers")
-//    }
+    suspend fun loadDb() {
+        val db = Room.databaseBuilder(
+                this.context!!.applicationContext,
+                RecipeDatabase::class.java,
+                "recipes")
+            .createFromAsset("db/recipes.db")
+            .build()
+
+        // Some debugging statements to show that this is actually working! ... ish.
+        // It's loading in the whole Recipe object! Only downside is... most likely onCreateVew()
+        // is getting called first before this recipe runs. Dag.
+        this.recipe = db.loadRecipeByName("Bean burgers")
+        val x = this.recipe
+        val y = x
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,7 +71,7 @@ class ItemDetailFragment : Fragment() {
 
         // Show the dummy content as text in a TextView.
         item?.let {
-            rootView.findViewById<TextView>(R.id.item_detail).text = it.details
+            rootView.findViewById<TextView>(R.id.item_detail).text = this.recipe?.Name
         }
 
         return rootView

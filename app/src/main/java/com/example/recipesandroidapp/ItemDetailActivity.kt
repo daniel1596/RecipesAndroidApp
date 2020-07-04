@@ -6,6 +6,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import androidx.room.Room
+import com.example.recipesandroidapp.room.RecipeDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * An activity representing a single Item detail screen. This
@@ -21,7 +26,7 @@ class ItemDetailActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.detail_toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "I <3 Molly Kate", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
 
@@ -46,6 +51,11 @@ class ItemDetailActivity : AppCompatActivity() {
                             intent.getStringExtra(ItemDetailFragment.ARG_ITEM_ID))
                 }
             }
+
+//            GlobalScope.launch(Dispatchers.Main) {
+//                fragment.loadDb()
+//                val x = fragment.recipe
+//            }
 
             supportFragmentManager.beginTransaction()
                     .add(R.id.item_detail_container, fragment)
